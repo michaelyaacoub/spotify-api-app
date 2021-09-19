@@ -82,6 +82,30 @@ app.get('/callback', (req, res) => {
         });
 });
 
+
+app.get('/refresh_token', (req, res) => {
+    const { refresh_token } = req.query;
+
+    axios({
+        method: 'post',
+        url: 'https://accounts.spotify.com/api/token',
+        data: querystring.stringify({
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token
+        }),
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+        },
+    })
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            res.send(error);
+        });
+});
+
 app.listen(port, () => {
     console.log(`Express app listening at http://localhost:${port}`);
 });
