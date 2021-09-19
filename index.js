@@ -13,7 +13,7 @@ console.log(process.env.CLIENT_ID);
 //router handler
 app.get("/", (req, res) => {
     const data = {
-        name: "Michael",
+        name: "Jack",
         isAwesome: true,
     };
 
@@ -82,12 +82,12 @@ app.get("/callback", (req, res) => {
                 const { refresh_token } = response.data;
 
                 axios.get(`http://localhost:8888/refresh_token?refresh_token=${refresh_token}`)
-                  .then(response => {
-                    res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
-                  })
-                  .catch(error => {
-                    res.send(error);
-                  });
+                    .then(response => {
+                        res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+                    })
+                    .catch(error => {
+                        res.send(error);
+                    });
 
             } else {
                 res.send(response);
