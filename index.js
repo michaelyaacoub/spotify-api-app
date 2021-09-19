@@ -1,7 +1,7 @@
 require('dotenv').config();
 const axios = require('axios');
 const express = require('express');
-const querystring = require('querystring');
+const queryString = require('query-string');
 const app = express();
 const port = 8888;
 
@@ -43,7 +43,7 @@ app.get('/login', (req, res) => {
 
     const scope = 'user-read-private user-read-email';
 
-    const queryParams = querystring.stringify({
+    const queryParams = queryString.stringify({
         client_id: CLIENT_ID,
         response_type: 'code',
         redirect_uri: REDIRECT_URI,
@@ -58,29 +58,29 @@ app.get('/callback', (req, res) => {
     const code = req.query.code || null;
 
     axios({
-      method: 'post',
-      url: 'https://accounts.spotify.com/api/token',
-      data: querystring.stringify({
-        grant_type: 'authorization_code',
-        code: code,
-        redirect_uri: REDIRECT_URI
-      }),
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
-      },
+        method: 'post',
+        url: 'https://accounts.spotify.com/api/token',
+        data: queryString.stringify({
+            grant_type: 'authorization_code',
+            code: code,
+            redirect_uri: REDIRECT_URI
+        }),
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+        },
     })
-      .then(response => {
-        if (response.status === 200) {
-          res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
-        } else {
-          res.send(response);
-        }
-      })
-      .catch(error => {
-        res.send(error);
-      });
-  });
+        .then(response => {
+            if (response.status === 200) {
+                res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`);
+            } else {
+                res.send(response);
+            }
+        })
+        .catch(error => {
+            res.send(error);
+        });
+});
 
 app.listen(port, () => {
     console.log(`Express app listening at http://localhost:${port}`);
