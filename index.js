@@ -13,7 +13,7 @@ console.log(process.env.CLIENT_ID);
 //router handler
 app.get("/", (req, res) => {
   const data = {
-    name: "Hello",
+    name: "Hello Spotify",
     isAwesome: true,
   };
 
