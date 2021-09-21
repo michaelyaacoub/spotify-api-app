@@ -9,10 +9,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="http://localhost:8888/login"
-        >
+        <a className="App-link" href="http://localhost:8888/login">
           Log in to Spotify
         </a>
       </header>
