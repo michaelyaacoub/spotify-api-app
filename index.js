@@ -80,14 +80,14 @@ app.get("/callback", (req, res) => {
     .then((response) => {
       if (response.status === 200) {
         const { access_token, refresh_token } = response.data;
-
+        // redirect to react app
         const queryParams = queryString.stringify({
           access_token,
           refresh_token,
         });
 
         res.redirect(`http://localhost:3000/?${queryParams}`);
-
+        // pass along token in query params
       } else {
         res.redirect(`/?${queryString.stringify({ error: 'invalid_token' })}`);
       }
