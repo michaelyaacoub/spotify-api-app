@@ -40,6 +40,7 @@ function App() {
           </a>
         ) : (
           <Router>
+            <ScrollToTop />
             <Switch>
               <Route path="/top-artists">
                 <h1>Top Artists</h1>
