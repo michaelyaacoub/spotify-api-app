@@ -2,20 +2,45 @@ import { BrowserRouter as Router, Switch, Route, useLocation } from "react-route
 import { useState, useEffect } from 'react';
 import { accessToken, logout, getCurrentUserProfile } from './spotify';
 import { catchErrors } from './utils';
-import styled from 'styled-components/macro';
+import styled, { createGlobalStyle } from 'styled-components/macro';
 
+const GlobalStyle = createGlobalStyle`
+  :root {
+    --black: #121212;
+    --green: #1DB954;
+    --white: #ffffff;
+
+    --font: 'Circular Std', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+
+  html {
+    box-sizing: border-box;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--black);
+    color: var(--white);
+    font-family: var(--font);
+  }
+`;
 
 const StyledLoginButton = styled.a`
-  background-color: green;
-  color: white;
+  background-color: var(--green);
+  color: var(--white);
   padding: 10px 20px;
   margin: 20px auto;
   border-radius: 30px;
   display: inline-block;
   text-decoration: none;
 `;
-
-
 
 // Scroll to top of page when changing routes
 function ScrollToTop() {
@@ -46,8 +71,9 @@ function App() {
 
   return (
     <div className="App">
+      <GlobalStyle />
       <header className="App-header">
-      {!token ? (
+        {!token ? (
           <StyledLoginButton href="http://localhost:8888/login">
             Log in to Spotify
           </StyledLoginButton>
@@ -76,7 +102,7 @@ function App() {
                       <h1>{profile.display_name}</h1>
                       <p>{profile.followers.total} Followers</p>
                       {profile.images.length && profile.images[0].url && (
-                        <img src={profile.images[0].url} alt="Avatar"/>
+                        <img src={profile.images[0].url} alt="Avatar" />
                       )}
                     </div>
                   )}
