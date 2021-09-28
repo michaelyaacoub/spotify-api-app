@@ -20,7 +20,6 @@ const Profile = () => {
 
       const userTopArtist = await getTopArtists();
       setTopArtists(userTopArtist.data);
-      console.log(topArtists.data);
     };
 
     catchErrors(fetchData());
