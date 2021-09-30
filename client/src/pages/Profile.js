@@ -8,7 +8,7 @@ const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [playlists, setPlaylist] = useState(null)
   const [topArtists, setTopArtists] = useState(null)
-  const [topATracks, setTopTracks] = useState(null)
+  const [topTracks, setTopTracks] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,8 +20,8 @@ const Profile = () => {
       setPlaylist(userPlaylists.data);
       console.log(userPlaylists.data);
 
-      const userTopArtist = await getTopArtists();
-      setTopArtists(userTopArtist.data);
+      const userTopArtists = await getTopArtists();
+      setTopArtists(userTopArtists.data);
 
       const userTopTracks = await getTopTracks();
       setTopTracks(userTopTracks.data);
