@@ -29,7 +29,7 @@ const Profile = () => {
 
     catchErrors(fetchData());
   }, []);
-  console.log(topArtists);
+  console.log(topArtists, topTracks);
 
   return (
     <>

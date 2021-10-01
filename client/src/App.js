@@ -54,7 +54,7 @@ function App() {
 
             <Switch>
               <Route path="/top-artists">
-                <TopArtists/>
+                <TopArtists />
               </Route>
               <Route path="/top-tracks">
                 <h1>Top Tracks</h1>
