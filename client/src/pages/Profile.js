@@ -1,24 +1,32 @@
 import { useState, useEffect } from 'react';
 import { catchErrors } from '../utils';
-import { getCurrentUserProfile, getCurrentUserPlaylists, getTopArtists, getTopTracks } from '../spotify';
-import { SectionWrapper, ArtistsGrid } from '../Components';
+import {
+  getCurrentUserProfile,
+  getCurrentUserPlaylists,
+  getTopArtists,
+  getTopTracks
+} from '../spotify';
+import {
+  SectionWrapper,
+  ArtistsGrid,
+  TrackList,
+  PlaylistsGrid
+} from '../components';
 import { StyledHeader } from '../styles';
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
-  const [playlists, setPlaylist] = useState(null)
-  const [topArtists, setTopArtists] = useState(null)
-  const [topTracks, setTopTracks] = useState(null)
+  const [playlists, setPlaylists] = useState(null);
+  const [topArtists, setTopArtists] = useState(null);
+  const [topTracks, setTopTracks] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const userProfile = await getCurrentUserProfile();
       setProfile(userProfile.data);
-      console.log(userProfile.data);
 
       const userPlaylists = await getCurrentUserPlaylists();
-      setPlaylist(userPlaylists.data);
-      console.log(userPlaylists.data);
+      setPlaylists(userPlaylists.data);
 
       const userTopArtists = await getTopArtists();
       setTopArtists(userTopArtists.data);
@@ -29,7 +37,6 @@ const Profile = () => {
 
     catchErrors(fetchData());
   }, []);
-  console.log(topArtists, topTracks);
 
   return (
     <>
@@ -54,16 +61,24 @@ const Profile = () => {
               </div>
             </div>
           </StyledHeader>
-          {topArtists && (
+
+          {topArtists && topTracks && playlists && (
             <main>
               <SectionWrapper title="Top artists this month" seeAllLink="/top-artists">
                 <ArtistsGrid artists={topArtists.items.slice(0, 10)} />
+              </SectionWrapper>
+
+              <SectionWrapper title="Top tracks this month" seeAllLink="/top-tracks">
+                <TrackList tracks={topTracks.items.slice(0, 10)} />
+              </SectionWrapper>
+
+              <SectionWrapper title="Playlists" seeAllLink="/playlists">
+                <PlaylistsGrid playlists={playlists.items.slice(0, 10)} />
               </SectionWrapper>
             </main>
           )}
         </>
       )}
-
     </>
   )
 };

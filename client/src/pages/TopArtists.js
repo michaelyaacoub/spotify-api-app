@@ -1,24 +1,23 @@
 import { useState, useEffect } from 'react';
-import { catchErrors } from '../utils';
 import { getTopArtists } from '../spotify';
-import { ArtistsGrid, SectionWrapper, TimeRangeButtons } from '../Components';
+import { catchErrors } from '../utils';
+import { ArtistsGrid, SectionWrapper, TimeRangeButtons } from '../components';
 
 const TopArtists = () => {
-    const [topArtists, setTopArtists] = useState(null)
+  const [topArtists, setTopArtists] = useState(null);
+  const [activeRange, setActiveRange] = useState('short');
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const userTopArtists = await getTopArtists();
-            setTopArtists(userTopArtists.data);
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await getTopArtists(`${activeRange}_term`);
+      setTopArtists(data);
+    };
 
-        catchErrors(fetchData());
-    }, []);
-    console.log(topArtists);
+    catchErrors(fetchData());
+  }, [activeRange]);
 
-
-    return (
-        <main>
+  return (
+    <main>
       <SectionWrapper title="Top Artists" breadcrumb={true}>
         <TimeRangeButtons
           activeRange={activeRange}
@@ -30,6 +29,7 @@ const TopArtists = () => {
         )}
       </SectionWrapper>
     </main>
-    );
+  );
 };
+
 export default TopArtists;
