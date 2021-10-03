@@ -17,12 +17,15 @@ const Playlists = () => {
 
 
     return (
+        <main>
         <SectionWrapper title="Playlists" seeAllLink="/playlists">
             {playLists && playLists.items && (
                 <PlaylistsGrid playlists={playlists.items} />
             )}
         </SectionWrapper>
+        </main>
     )
+
 };
 
 export default Playlists;
