@@ -20,7 +20,7 @@ const PlaylistsGrid = ({ playlists }) => (
         ))}
       </StyledGrid>
     ) : (
-      <p className="empty-notice">No playlists available</p>
+      <p className="empty-notice">No Playlists Available</p>
     )}
   </>
 );
