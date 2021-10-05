@@ -9,9 +9,10 @@ import { StyledHeader } from '../styles';
 const Playlist = () => {
     const { id } = useParams();
     const [playlist, setPlaylist] = useState(null);
-
     const [sortValue, setSortValue] = useState('');
-    const sortOptions = ['danceability', 'tempo', 'energy'];
+    const [tracksData, setTracksData] = useState(null);
+    const [tracks, setTracks] = useState(null);
+
 
     useEffect(() => {
         const fetchData = async () => {
