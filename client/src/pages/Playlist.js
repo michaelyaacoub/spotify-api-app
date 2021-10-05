@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { catchErrors } from '../utils';
 import axios from 'axios';
-import { getPlaylistById } from '../spotify';
-import { TrackList, SectionWrapper} from '../components';
+import { getPlaylistById, getAudioFeaturesForTracks } from '../spotify';
+import { TrackList, SectionWrapper } from '../components';
 import { StyledHeader } from '../styles';
 
 
@@ -12,6 +12,7 @@ const Playlist = () => {
     const [sortValue, setSortValue] = useState('');
     const [tracksData, setTracksData] = useState(null);
     const [tracks, setTracks] = useState(null);
+    const [audioFeatures, setAudioFeatures] = useState(null)
 
 
     useEffect(() => {
@@ -54,34 +55,7 @@ const Playlist = () => {
             ]));
         };
         catchErrors(fetchAudioFeatures());
-
     }, [tracksData]);
-
-    const tracksForTracklist = useMemo(() => {
-        if (!tracks) {
-            return;
-        }
-        return tracks.map(({ track }) => track);
-    }, [tracks]);
-
-    // Sort tracks by audio feature to be used in template
-    const sortedTracks = useMemo(() => {
-        if (!tracksWithAudioFeatures) {
-            return null;
-        }
-
-        return [...tracksWithAudioFeatures].sort((a, b) => {
-            const aFeatures = a['audio_features'];
-            const bFeatures = b['audio_features'];
-
-            if (!aFeatures || !bFeatures) {
-                return false;
-            }
-
-            return bFeatures[sortValue] - aFeatures[sortValue];
-        });
-    }, [sortValue, tracksWithAudioFeatures]);
-
 
     return (
         <StyledDropdown active={!!sortValue}>
