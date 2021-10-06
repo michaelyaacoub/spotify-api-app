@@ -30,3 +30,18 @@ min-height: 50vh;
     right: 0;
 }
 `;
+
+const StyledBar = styled.div`
+width: 10px;
+height: 5px;
+margin: 0 2px;
+background-color: var(--dark-grey);
+animation-name: ${dance};
+animation-duration: 400ms;
+animation-play-state: running;
+animation-direction: alternate;
+animation-timing-function: linear;
+animation-iteration-count: infinite;
+animation-delay: ${props => props.delay || '0ms'};
+
+`;
