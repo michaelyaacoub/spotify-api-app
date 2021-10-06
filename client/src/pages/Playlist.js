@@ -114,7 +114,6 @@ const Playlist = () => {
                         <div className="header__inner">
                             {playlist.images.length && playlist.images[0].url && (
                                 <img className="header__img" src={playlist.images[0].url} alt="Playlist Artwork" />
-
                             )}
                             <div>
                                 <div className="header__overline">Playlist</div>
@@ -130,12 +129,9 @@ const Playlist = () => {
                     </StyledHeader>
                 </>
             )}
-
-
-
             <main>
                 <SectionWrapper title="Playlist" breadcrumb="true">
-                    <div>
+                    <StyledDropdown>
                         <label className="sr-only" htmlFor="order-select">Sort tracks</label>
                         <select
                             name="track-order"
@@ -149,30 +145,12 @@ const Playlist = () => {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </StyledDropdown>
                     {sortedTracks && (
                         <TrackList tracks={sortedTracks} />
                     )}
                 </SectionWrapper>
             </main>
-
-
-
-            <StyledDropdown active={!!sortValue}>
-                <label className="sr-only" htmlFor="order-select">Sort tracks</label>
-                <select
-                    name="track-order"
-                    id="order-select"
-                    onChange={e => setSortValue(e.target.value)}
-                >
-                    <option value="">Sort tracks</option>
-                    {sortOptions.map((option, i) => (
-                        <option value={option} key={i}>
-                            {`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
-                        </option>
-                    ))}
-                </select>
-            </StyledDropdown>
         </>
     )
 }
