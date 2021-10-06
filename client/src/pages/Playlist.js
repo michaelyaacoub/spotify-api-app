@@ -58,15 +58,15 @@ const Playlist = () => {
     }, [tracksData]);
 
     const tracksWithAudioFeatures = useMemo(() => {
-        if (!tracks || !audioFeatures){
+        if (!tracks || !audioFeatures) {
             return null;
         }
-        return tracks.map(({track}) => {
+        return tracks.map(({ track }) => {
             const trackToAdd = track;
 
-            if(!track.audio_features){
+            if (!track.audio_features) {
                 const audioFeaturesObj = audioFeatures.find(item => {
-                    if(!item || !track) {
+                    if (!item || !track) {
                         return null
                     }
                     return item.id === track.id;
@@ -77,40 +77,69 @@ const Playlist = () => {
         });
     }, [tracks, audioFeatures]);
 
-      // Sort tracks by audio feature to be used in template
-  const sortedTracks = useMemo(() => {
-    if (!tracksWithAudioFeatures) {
-      return null;
-    }
+    // Sort tracks by audio feature to be used in template
+    const sortedTracks = useMemo(() => {
+        if (!tracksWithAudioFeatures) {
+            return null;
+        }
 
-    return [...tracksWithAudioFeatures].sort((a, b) => {
-      const aFeatures = a['audio_features'];
-      const bFeatures = b['audio_features'];
+        return [...tracksWithAudioFeatures].sort((a, b) => {
+            const aFeatures = a['audio_features'];
+            const bFeatures = b['audio_features'];
 
-      if (!aFeatures || !bFeatures) {
-        return false;
-      }
+            if (!aFeatures || !bFeatures) {
+                return false;
+            }
 
-      return bFeatures[sortValue] - aFeatures[sortValue];
-    });
-  }, [sortValue, tracksWithAudioFeatures]);
+            return bFeatures[sortValue] - aFeatures[sortValue];
+        });
+    }, [sortValue, tracksWithAudioFeatures]);
 
     return (
-        <StyledDropdown active={!!sortValue}>
-            <label className="sr-only" htmlFor="order-select">Sort tracks</label>
-            <select
-                name="track-order"
-                id="order-select"
-                onChange={e => setSortValue(e.target.value)}
-            >
-                <option value="">Sort tracks</option>
-                {sortOptions.map((option, i) => (
-                    <option value={option} key={i}>
-                        {`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
-                    </option>
-                ))}
-            </select>
-        </StyledDropdown>
+        <>
+            {playlist && (
+                <StyledHeader>
+                    <div className="header__inner">
+                        {playlist.images.length && playlist.images[0].url && (
+                            <img className="header__img" src={playlist.images[0].url} alt="Playlist Artwork" />
+
+                        )}
+                        <div>
+                            <div className="header__overline">Playlist</div>
+                            <h1 className="header__name">{playlist.name}</h1>
+                            <p>
+                                {playlist.followers.total} {`follower${playlist.followers.total !== 1 ? 's' : ''}`}
+
+                            </p>
+                        </div>
+                    </div>
+                </StyledHeader>
+            )
+
+            }
+
+
+
+
+
+
+
+            <StyledDropdown active={!!sortValue}>
+                <label className="sr-only" htmlFor="order-select">Sort tracks</label>
+                <select
+                    name="track-order"
+                    id="order-select"
+                    onChange={e => setSortValue(e.target.value)}
+                >
+                    <option value="">Sort tracks</option>
+                    {sortOptions.map((option, i) => (
+                        <option value={option} key={i}>
+                            {`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
+                        </option>
+                    ))}
+                </select>
+            </StyledDropdown>
+        </>
     )
 }
 export default Playlist;
