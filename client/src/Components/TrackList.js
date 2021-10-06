@@ -23,7 +23,7 @@ const TrackList = ({ tracks }) => (
                     <span key={i}>
                       {artist.name}{i !== track.artists.length - 1 && ', '}
                     </span>
-                  ))}
+                  ))};
                 </div>
               </div>
             </div>
@@ -34,7 +34,7 @@ const TrackList = ({ tracks }) => (
               {formatDuration(track.duration_ms)}
             </div>
           </li>
-        ))}
+        ))};
       </StyledTrackList>
     ) : (
       <p className="empty-notice">No tracks available</p>

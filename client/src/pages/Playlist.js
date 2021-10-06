@@ -128,7 +128,7 @@ const Playlist = () => {
                         </div>
                     </StyledHeader>
                 </>
-            )}
+            )};
             <main>
                 <SectionWrapper title="Playlist" breadcrumb="true">
                     <StyledDropdown active={!!sortValue}>
@@ -138,7 +138,7 @@ const Playlist = () => {
                             id="order-select"
                             onChange={e => setSortValue(e.target.value)}
                         >
-                            <option value="">Sort tracks</option>
+                            <option value="">Sort Tracks</option>
                             {sortOptions.map((option, i) => (
                                 <option value={option} key={i}>
                                     {`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
@@ -148,10 +148,10 @@ const Playlist = () => {
                     </StyledDropdown>
                     {sortedTracks && (
                         <TrackList tracks={sortedTracks} />
-                    )}
+                    )};
                 </SectionWrapper>
             </main>
         </>
     )
-}
+};
 export default Playlist;

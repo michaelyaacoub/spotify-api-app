@@ -28,10 +28,8 @@ const TopArtists = () => {
                     <ArtistsGrid artists={topArtists.items} />
                 ) : (
                     <Loader />
-                )};
+                )}
             </SectionWrapper>
         </main>
-    );
-};
-
+    )};
 export default TopArtists;
