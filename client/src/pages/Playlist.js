@@ -150,8 +150,8 @@ const Playlist = () => {
                             ))}
                         </select>
                     </div>
-                    {tracksWithAudioFeatures && (
-                        <TrackList tracks={tracksWithAudioFeatures} />
+                    {sortedTracks && (
+                        <TrackList tracks={sortedTracks} />
                     )}
                 </SectionWrapper>
             </main>
