@@ -57,3 +57,5 @@ const Loader = () => (
         </div>
     </StyledLoader>
 )
+
+export default Loader;
