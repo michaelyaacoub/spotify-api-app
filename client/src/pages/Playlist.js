@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { catchErrors } from '../utils';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getPlaylistById, getAudioFeaturesForTracks } from '../spotify';
 import { TrackList, SectionWrapper } from '../components';
@@ -45,6 +46,7 @@ const Playlist = () => {
         ]));
         catchErrors(fetchMoreData());
 
+
         // Also update the audioFeatures state variable using the track IDs
         const fetchAudioFeatures = async () => {
             const ids = tracksData.items.map(({ track }) => track.id).join(',');
@@ -56,6 +58,15 @@ const Playlist = () => {
         };
         catchErrors(fetchAudioFeatures());
     }, [tracksData]);
+
+
+    // const tracksForTracklist = useMemo(() => {
+    //     if (!tracks) {
+    //       return;
+    //     }
+    //     return tracks.map(({ track }) => track);
+    //   }, [tracks]);
+
 
     const tracksWithAudioFeatures = useMemo(() => {
         if (!tracks || !audioFeatures) {
@@ -98,29 +109,52 @@ const Playlist = () => {
     return (
         <>
             {playlist && (
-                <StyledHeader>
-                    <div className="header__inner">
-                        {playlist.images.length && playlist.images[0].url && (
-                            <img className="header__img" src={playlist.images[0].url} alt="Playlist Artwork" />
+                <>
+                    <StyledHeader>
+                        <div className="header__inner">
+                            {playlist.images.length && playlist.images[0].url && (
+                                <img className="header__img" src={playlist.images[0].url} alt="Playlist Artwork" />
 
-                        )}
-                        <div>
-                            <div className="header__overline">Playlist</div>
-                            <h1 className="header__name">{playlist.name}</h1>
-                            <p>
-                                {playlist.followers.total} {`follower${playlist.followers.total !== 1 ? 's' : ''}`}
-
-                            </p>
+                            )}
+                            <div>
+                                <div className="header__overline">Playlist</div>
+                                <h1 className="header__name">{playlist.name}</h1>
+                                <p className="header__meta">
+                                    {playlist.followers.total ? (
+                                        <span>{`follower${playlist.followers.total !== 1 ? 's' : ''}`}</span>
+                                    ) : null}
+                                    <span>{playlist.tracks.total} {`song${playlist.tracks.total !== 1 ? 's' : ''}`}</span>
+                                </p>
+                            </div>
                         </div>
+                    </StyledHeader>
+                </>
+            )}
+
+
+
+            <main>
+                <SectionWrapper title="Playlist" breadcrumb="true">
+                    <div>
+                        <label className="sr-only" htmlFor="order-select">Sort tracks</label>
+                        <select
+                            name="track-order"
+                            id="order-select"
+                            onChange={e => setSortValue(e.target.value)}
+                        >
+                            <option value="">Sort tracks</option>
+                            {sortOptions.map((option, i) => (
+                                <option value={option} key={i}>
+                                    {`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
+                                </option>
+                            ))}
+                        </select>
                     </div>
-                </StyledHeader>
-            )
-
-            }
-
-
-
-
+                    {tracksWithAudioFeatures && (
+                        <TrackList tracks={tracksWithAudioFeatures} />
+                    )}
+                </SectionWrapper>
+            </main>
 
 
 
