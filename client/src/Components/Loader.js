@@ -1,4 +1,4 @@
-import styled, {keyframes} from "styled-components/macro";
+import styled, { keyframes } from "styled-components/macro";
 const dance = keyframes`
 from {
     height: 10px;
@@ -45,3 +45,15 @@ animation-iteration-count: infinite;
 animation-delay: ${props => props.delay || '0ms'};
 
 `;
+
+const Loader = () => (
+    <StyledLoader>
+        <div className="bars">
+            <StyledBar delay="250ms" />
+            <StyledBar delay="715ms" />
+            <StyledBar delay="475ms" />
+            <StyledBar delay="25ms" />
+            <StyledBar delay="190ms" />
+        </div>
+    </StyledLoader>
+)
