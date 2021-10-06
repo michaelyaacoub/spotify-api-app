@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getCurrentUserPlaylists } from '../spotify';
 import { catchErrors } from '../utils';
-import { SectionWrapper, PlaylistsGrid } from '../components';
+import { SectionWrapper, PlaylistsGrid, Loader } from '../components';
+import TopTracks from './TopTracks';
 
 const Playlists = () => {
   const [playlistsData, setPlaylistsData] = useState(null);
@@ -48,11 +49,15 @@ const Playlists = () => {
 
   return (
     <main>
+      {TopTracks ? (
       <SectionWrapper title="Public Playlists" breadcrumb={true}>
         {playlists && (
           <PlaylistsGrid playlists={playlists} />
         )};
       </SectionWrapper>
+      ) : (
+        <Loader />
+      )}
     </main>
   );
 };

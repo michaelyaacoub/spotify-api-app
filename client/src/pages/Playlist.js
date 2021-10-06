@@ -3,7 +3,7 @@ import { catchErrors } from '../utils';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { getPlaylistById, getAudioFeaturesForTracks } from '../spotify';
-import { TrackList, SectionWrapper } from '../components';
+import { TrackList, SectionWrapper, Loader } from '../components';
 import { StyledHeader, StyledDropdown } from '../styles';
 
 
@@ -108,7 +108,7 @@ const Playlist = () => {
 
     return (
         <>
-            {playlist && (
+            {playlist ? (
                 <>
                     <StyledHeader>
                         <div className="header__inner">
@@ -127,31 +127,33 @@ const Playlist = () => {
                             </div>
                         </div>
                     </StyledHeader>
+                    <main>
+                        <SectionWrapper title="Playlist" breadcrumb="true">
+                            <StyledDropdown active={!!sortValue}>
+                                <label className="sr-only" htmlFor="order-select">Sort tracks</label>
+                                <select
+                                    name="track-order"
+                                    id="order-select"
+                                    onChange={e => setSortValue(e.target.value)}
+                                >
+                                    <option value="">Sort Tracks</option>
+                                    {sortOptions.map((option, i) => (
+                                        <option value={option} key={i}>
+                                            {`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
+                                        </option>
+                                    ))}
+                                </select>
+                            </StyledDropdown>
+                            {sortedTracks && (
+                                <TrackList tracks={sortedTracks} />
+                            )};
+                        </SectionWrapper>
+                    </main>
+                    </>
+            ) : (
+                <Loader />
+            )}
                 </>
-            )};
-            <main>
-                <SectionWrapper title="Playlist" breadcrumb="true">
-                    <StyledDropdown active={!!sortValue}>
-                        <label className="sr-only" htmlFor="order-select">Sort tracks</label>
-                        <select
-                            name="track-order"
-                            id="order-select"
-                            onChange={e => setSortValue(e.target.value)}
-                        >
-                            <option value="">Sort Tracks</option>
-                            {sortOptions.map((option, i) => (
-                                <option value={option} key={i}>
-                                    {`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
-                                </option>
-                            ))}
-                        </select>
-                    </StyledDropdown>
-                    {sortedTracks && (
-                        <TrackList tracks={sortedTracks} />
-                    )};
-                </SectionWrapper>
-            </main>
-        </>
-    )
+            )
 };
-export default Playlist;
+            export default Playlist;

@@ -30,7 +30,7 @@ const TopTracks = () => {
         )}
       </SectionWrapper>
       ) : (
-        Loader
+        <Loader />
       )};
     </main>
   );
