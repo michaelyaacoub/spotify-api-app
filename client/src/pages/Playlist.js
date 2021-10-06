@@ -3,17 +3,17 @@ import { catchErrors } from '../utils';
 import axios from 'axios';
 import { getPlaylistById, getAudioFeaturesForTracks } from '../spotify';
 import { TrackList, SectionWrapper } from '../components';
-import { StyledHeader } from '../styles';
+import { StyledHeader, StyledDropdown } from '../styles';
 
 
 const Playlist = () => {
     const { id } = useParams();
     const [playlist, setPlaylist] = useState(null);
-    const [sortValue, setSortValue] = useState('');
     const [tracksData, setTracksData] = useState(null);
     const [tracks, setTracks] = useState(null);
-    const [audioFeatures, setAudioFeatures] = useState(null)
-
+    const [audioFeatures, setAudioFeatures] = useState(null);
+    const [sortValue, setSortValue] = useState('');
+    const sortOptions = ['danceability', 'tempo', 'energy'];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,6 +56,44 @@ const Playlist = () => {
         };
         catchErrors(fetchAudioFeatures());
     }, [tracksData]);
+
+    const tracksWithAudioFeatures = useMemo(() => {
+        if (!tracks || !audioFeatures){
+            return null;
+        }
+        return tracks.map(({track}) => {
+            const trackToAdd = track;
+
+            if(!track.audio_features){
+                const audioFeaturesObj = audioFeatures.find(item => {
+                    if(!item || !track) {
+                        return null
+                    }
+                    return item.id === track.id;
+                });
+                trackToAdd['audio_features'] = audioFeaturesObj;
+            }
+            return trackToAdd;
+        });
+    }, [tracks, audioFeatures]);
+
+      // Sort tracks by audio feature to be used in template
+  const sortedTracks = useMemo(() => {
+    if (!tracksWithAudioFeatures) {
+      return null;
+    }
+
+    return [...tracksWithAudioFeatures].sort((a, b) => {
+      const aFeatures = a['audio_features'];
+      const bFeatures = b['audio_features'];
+
+      if (!aFeatures || !bFeatures) {
+        return false;
+      }
+
+      return bFeatures[sortValue] - aFeatures[sortValue];
+    });
+  }, [sortValue, tracksWithAudioFeatures]);
 
     return (
         <StyledDropdown active={!!sortValue}>
