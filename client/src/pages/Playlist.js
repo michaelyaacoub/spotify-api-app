@@ -130,7 +130,7 @@ const Playlist = () => {
                     <main>
                         <SectionWrapper title="Playlist" breadcrumb="true">
                             <StyledDropdown active={!!sortValue}>
-                                <label className="sr-only" htmlFor="order-select">Sort tracks</label>
+                                <label className="sr-only" htmlFor="order-select">Sort Tracks</label>
                                 <select
                                     name="track-order"
                                     id="order-select"
@@ -146,14 +146,14 @@ const Playlist = () => {
                             </StyledDropdown>
                             {sortedTracks && (
                                 <TrackList tracks={sortedTracks} />
-                            )};
+                            )}
                         </SectionWrapper>
                     </main>
-                    </>
+                </>
             ) : (
                 <Loader />
             )}
-                </>
-            )
-};
-            export default Playlist;
+        </>
+    )
+}
+export default Playlist;

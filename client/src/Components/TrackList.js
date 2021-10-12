@@ -34,7 +34,7 @@ const TrackList = ({ tracks }) => (
               {formatDuration(track.duration_ms)}
             </div>
           </li>
-        ))};
+        ))}
       </StyledTrackList>
     ) : (
       <p className="empty-notice">No tracks available</p>

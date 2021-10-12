@@ -53,13 +53,13 @@ const Playlists = () => {
       <SectionWrapper title="Public Playlists" breadcrumb={true}>
         {playlists && (
           <PlaylistsGrid playlists={playlists} />
-        )};
+        )}
       </SectionWrapper>
       ) : (
         <Loader />
       )}
     </main>
-  );
-};
+  )
+}
 
 export default Playlists;

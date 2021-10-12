@@ -31,9 +31,9 @@ const TopTracks = () => {
       </SectionWrapper>
       ) : (
         <Loader />
-      )};
+      )}
     </main>
-  );
-};
+  )
+}
 
 export default TopTracks;
