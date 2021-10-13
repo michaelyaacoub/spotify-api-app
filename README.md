@@ -1,4 +1,5 @@
 # Spotify Profile
+![og](https://user-images.githubusercontent.com/56051759/137192130-d44118df-7e87-4508-a09b-174f24f08136.png)
 
 > A web app for visualizing personalized Spotify data
 
@@ -45,4 +46,4 @@ Built with a bunch of things, but to name a few:
 
 5. Once the app is live on Heroku, hitting http://app-name.herokuapp.com/login should be the same as hitting http://localhost:8888/login
 
-Good Luck
+<Good Luck />
