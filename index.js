@@ -3,11 +3,18 @@ const axios = require("axios");
 const express = require("express");
 const queryString = require("query-string");
 const app = express();
-const port = 8888;
+const path = require('path');
+
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
+const FRONTEND_URI = process.env.FRONTEND_URI;
+const PORT = process.env.PORT || 8888;
+
+
+// Priority serve any static files.
+app.use(express.static(path.resolve(__dirname, './client/build')));
 
 console.log(process.env.CLIENT_ID);
 //router handler
@@ -88,7 +95,7 @@ app.get('/callback', (req, res) => {
             expires_in,
           });
 
-          res.redirect(`http://localhost:3000/?${queryParams}`);
+          res.redirect(`${FRONTEND_URI}/?${queryParams}`);
 
         } else {
           res.redirect(`/?${queryString.stringify({ error: 'invalid_token' })}`);
@@ -125,8 +132,13 @@ app.get("/refresh_token", (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`Express app listening at http://localhost:${port}`);
+// All remaining requests return the React app, so it can handle routing.
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Express app listening at http://localhost:${PORT}`);
 });
 
 // // every route in express is writen like this:
